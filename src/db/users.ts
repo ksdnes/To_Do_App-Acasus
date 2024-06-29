@@ -6,13 +6,15 @@ const USersSchema = new mongoose.Schema({
   authentication: {
     password: { type: String, required: true, select: false },
     salt: { type: String, select: false },
+    token: { type: String, select: true },
   },
 });
 export const UserModel = mongoose.model("User", USersSchema);
-export const getUserByToken = async (sessionToken: string) => {
+export const getUserByToken = async (token: string) => {
   const user = await UserModel.findOne({
-    "authentication.sessionToken": sessionToken,
+    "authentication.token": token,
   });
+  console.log("user", user);
   return user;
 };
 export const getUsers = () => UserModel.find();

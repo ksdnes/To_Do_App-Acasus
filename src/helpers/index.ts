@@ -4,8 +4,8 @@ import jwt from "jsonwebtoken";
 
 const JWT_SECRET = "TODOAPP-ACASUS-KISSIMONKADENES";
 
-export const generateToken = (userId: string) => {
-  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: "1h" });
+export const generateToken = (id: string) => {
+  return jwt.sign({ id }, JWT_SECRET, { expiresIn: "1h" });
 };
 
 export const verifyToken = (token: string) => {

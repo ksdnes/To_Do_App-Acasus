@@ -7,10 +7,12 @@ declare module "express" {
 }
 
 export interface User {
+  id: string;
   username: string;
   email: string;
   authentication: {
     password: string;
     salt?: string;
+    token: string;
   };
 }

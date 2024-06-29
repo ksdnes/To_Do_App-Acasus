@@ -25,8 +25,11 @@ export const login = async (req: express.Request, res: express.Response) => {
       return res.sendStatus(403);
     }
 
-    const token = generateToken(user._id.toString());
-    res.cookie("accessToken", token, {
+    const token = generateToken(user.id.toString());
+    user.authentication.token = token;
+    await user.save();
+
+    res.cookie("accessToken", user.authentication.token, {
       httpOnly: true,
       sameSite: "strict",
       secure: true,
