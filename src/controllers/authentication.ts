@@ -71,3 +71,13 @@ export const register = async (req: express.Request, res: express.Response) => {
     return res.sendStatus(500);
   }
 };
+export const logout = async (req: express.Request, res: express.Response) => {
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production", // Ensure the cookie is sent over HTTPS in production
+    sameSite: "strict",
+  });
+
+  // Send a response indicating the user has been logged out
+  res.status(200).json({ message: "Logged out successfully" });
+};
