@@ -23,12 +23,10 @@ export const authenticateToken = async (
       });
     }
     const existingUser = await getUserByToken(accessToken);
-    console.log(existingUser);
     if (!existingUser) {
       console.log("there is not existing user with this Token");
       return res.sendStatus(403);
     }
-    console.log("decodedUser", decodedUser);
     req.user = decodedUser;
     next();
   } catch (error) {
@@ -64,7 +62,6 @@ export const checkOwnership = async (
   const { id } = req.params;
   try {
     const runningTrack = await getRunningTrackById(id);
-    console.log(runningTrack);
     if (!runningTrack) {
       return res.status(404).json({ message: "Running track not found" });
     }
@@ -73,7 +70,6 @@ export const checkOwnership = async (
         .status(403)
         .json({ message: "Forbidden: You do not own this running track" });
     }
-    console.log("You are the owner");
     next();
   } catch (error) {
     console.error("Error checking ownership:", error);
