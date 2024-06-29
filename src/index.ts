@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import compression from "compression";
 import cors from "cors";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 import router from "./router";
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(
 );
 
 app.use(compression());
+app.use(cookieParser());
 app.use(bodyParser.json());
 
 const server = http.createServer(app);
@@ -24,7 +26,7 @@ server.listen(8080, () => {
 });
 
 const MONGO_URL =
-  "mongodb+srv://ksdnes0101:admin@cluster0.mvwuyti.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://ksdnes01:asd123@todoapp.rkcjbxg.mongodb.net/?retryWrites=true&w=majority&appName=todoapp";
 
 mongoose.Promise = Promise;
 mongoose.connect(MONGO_URL);
