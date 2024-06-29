@@ -7,6 +7,7 @@ const RunningTracksSchema = new mongoose.Schema({
   distance: { type: Number, required: true },
   estimatedDuration: { type: Number, required: true },
   dateTime: { type: Date, required: true },
+  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 export const RunningTracksModel = mongoose.model(
@@ -30,5 +31,7 @@ export const updateRunningTrackById = (
   return RunningTracksModel.findByIdAndUpdate(id, values, { new: true });
 };
 export const deleteRunningTrackById = (id: string) => {
-  return RunningTracksModel.findOneAndDelete({ id });
+  const deletedTask = RunningTracksModel.findByIdAndDelete(id);
+  console.log("deletedTask", deletedTask);
+  return deletedTask;
 };

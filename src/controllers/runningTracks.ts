@@ -50,12 +50,15 @@ export const createRunningTrackHandler = async (
   res: express.Response
 ) => {
   const { name, location, distance, estimatedDuration, dateTime } = req.body;
-  const newRunningTrack: CreateRunningTrackInput = {
+  const userId = req.user?.id; // Assuming req.user contains the authenticated user's information
+  console.log("userId:", userId);
+  const newRunningTrack = {
     name,
     location,
     distance,
     estimatedDuration,
     dateTime,
+    user: userId,
   };
   console.log(newRunningTrack);
   try {

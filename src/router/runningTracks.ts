@@ -6,7 +6,7 @@ import {
   updateRunningTrack,
   deleteRunningTrack,
 } from "../controllers/runningTracks";
-import { authenticateToken, isOwner } from "../middlewares";
+import { authenticateToken, isOwner, checkOwnership } from "../middlewares";
 export default (router: express.Router) => {
   // GET all running tracks (accessible to everyone)
   router.get("/running-tracks", authenticateToken, getAllRunningTracks);
@@ -21,7 +21,7 @@ export default (router: express.Router) => {
   router.patch(
     "/running-tracks/:id",
     authenticateToken,
-    isOwner,
+    checkOwnership,
     updateRunningTrack
   );
 
@@ -29,7 +29,7 @@ export default (router: express.Router) => {
   router.delete(
     "/running-tracks/:id",
     authenticateToken,
-    isOwner,
+    checkOwnership,
     deleteRunningTrack
   );
 };

@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { Document } from "mongoose";
+import mongoose, { Document } from "mongoose";
 
 declare module "express" {
   interface Request {
@@ -25,6 +25,7 @@ export interface RunningTrack {
   distance: Date;
   estimatedDuration: number;
   dateTime: Date;
+  user: mongoose.Types.ObjectId;
 }
 
 export interface RunningTrackDocument extends RunningTrack, Document {}
