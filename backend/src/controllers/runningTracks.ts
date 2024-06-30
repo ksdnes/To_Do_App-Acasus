@@ -33,7 +33,6 @@ export const getRunningTrack = async (
   const { id } = req.params;
   try {
     const runningTrack = await getRunningTrackById(id);
-    console.log(runningTrack);
     if (!runningTrack) {
       return res.status(404).json({ message: "Running track not found" });
     }
@@ -51,7 +50,6 @@ export const createRunningTrackHandler = async (
 ) => {
   const { name, location, distance, estimatedDuration, dateTime } = req.body;
   const userId = req.user?.id; // Assuming req.user contains the authenticated user's information
-  console.log("userId:", userId);
   const newRunningTrack = {
     name,
     location,
@@ -60,7 +58,6 @@ export const createRunningTrackHandler = async (
     dateTime,
     user: userId,
   };
-  console.log(newRunningTrack);
   try {
     const createdRunningTrack = await createRunningTrack(newRunningTrack);
     res.status(201).json(createdRunningTrack);

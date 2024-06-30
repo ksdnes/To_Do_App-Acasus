@@ -64,7 +64,6 @@ export const register = async (req: express.Request, res: express.Response) => {
         password: hashedPassword,
       },
     });
-    console.log("user", user);
     return res.status(200).json(user).end();
   } catch (error) {
     console.error("Registration error:", error);
@@ -74,10 +73,9 @@ export const register = async (req: express.Request, res: express.Response) => {
 export const logout = async (req: express.Request, res: express.Response) => {
   res.clearCookie("accessToken", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // Ensure the cookie is sent over HTTPS in production
+    secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
   });
 
-  // Send a response indicating the user has been logged out
   res.status(200).json({ message: "Logged out successfully" });
 };

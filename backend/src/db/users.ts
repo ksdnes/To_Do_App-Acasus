@@ -14,7 +14,6 @@ export const getUserByToken = async (token: string) => {
   const user = await UserModel.findOne({
     "authentication.token": token,
   });
-  console.log("user", user);
   return user;
 };
 export const getUsers = () => UserModel.find();
