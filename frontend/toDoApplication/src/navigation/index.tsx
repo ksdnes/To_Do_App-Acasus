@@ -5,7 +5,7 @@ import React from "react";
 const Navigation = () => {
   return (
     <NavigationContainer>
-      {true ? <AppStackNavigator /> : <AuthStackNavigator />}
+      {false ? <AppStackNavigator /> : <AuthStackNavigator />}
     </NavigationContainer>
   );
 };

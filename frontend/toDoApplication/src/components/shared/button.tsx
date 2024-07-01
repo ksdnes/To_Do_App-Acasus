@@ -7,6 +7,7 @@ type ButtonProps = {
   onLongPress?: () => void;
   disabled?: boolean;
   uppercase?: boolean;
+  backgroundColor?: string;
 };
 
 const Button = ({
@@ -15,11 +16,12 @@ const Button = ({
   onPress,
   disabled,
   uppercase,
+  backgroundColor,
 }: ButtonProps) => {
   return (
     <Pressable onPress={onPress} onLongPress={onLongPress} disabled={disabled}>
       <Box
-        bg={disabled ? "gray800" : "primary"}
+        bg={disabled ? "gray800" : backgroundColor || "primary"} // Correct the ternary logic
         py="3.5"
         borderRadius="rounded-7xl"
       >
