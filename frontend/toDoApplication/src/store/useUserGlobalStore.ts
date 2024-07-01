@@ -19,7 +19,7 @@ const useUserGlobalStore = create<IUserGlobalStore>()(
       },
     }),
     {
-      name: "To Do Application - Acasis",
+      name: "To Do Application - Acasus",
       storage: createJSONStorage(() => AsyncStorage),
     }
   )
