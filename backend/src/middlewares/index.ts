@@ -1,7 +1,7 @@
 import express from "express";
 import { verifyToken } from "../helpers";
 import { User } from "../types/types";
-import { getUserByToken } from "../db/users";
+import { getUserByToken, getUserById } from "../db/users";
 import { getRunningTrackById } from "../db/runningTracks";
 
 export const authenticateToken = async (
@@ -9,29 +9,38 @@ export const authenticateToken = async (
   res: express.Response,
   next: express.NextFunction
 ) => {
-  const accessToken = req.cookies["accessToken"];
+  const authHeader = req.headers["authorization"];
+  console.log("authHeader" + authHeader);
+  if (!authHeader) {
+    return res.status(401).json({ message: "Authentication failed heree" });
+  }
+  const token = authHeader; // Extract token from Authorization header
 
-  if (!accessToken) {
-    return res.status(401).json({ message: "Authentication failed" });
+  if (!token) {
+    return res.status(401).json({ message: "Authentication failed 2" });
   }
 
   try {
-    const decodedUser = verifyToken(accessToken) as User;
-    if (!decodedUser) {
-      return res.status(401).json({
-        message: "The token verification failed",
-      });
+    const decodedToken = verifyToken(token.toString());
+    console.log("decodedToken1", decodedToken);
+
+    if (typeof decodedToken === "string" || !decodedToken) {
+      return res.status(401).json({ message: "Token verification failed" });
     }
-    const existingUser = await getUserByToken(accessToken);
+
+    const { id } = decodedToken;
+    console.log("decodedToken1", decodedToken);
+    const existingUser = await getUserById(id);
     if (!existingUser) {
-      console.log("there is not existing user with this Token");
+      console.log("No existing user with this token");
       return res.sendStatus(403);
     }
-    req.user = decodedUser;
+
+    req.user = existingUser as User; // Cast existingUser to User interface
     next();
   } catch (error) {
     console.error("Authentication error:", error);
-    return res.status(401).json({ message: "Authentication failed" });
+    return res.status(401).json({ message: "Authentication failed2" });
   }
 };
 export const isOwner = async (

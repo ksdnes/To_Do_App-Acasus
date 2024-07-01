@@ -14,7 +14,6 @@ export interface User {
   authentication: {
     password: string;
     salt?: string;
-    token: string;
   };
 }
 

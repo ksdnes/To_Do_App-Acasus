@@ -26,15 +26,19 @@ export const login = async (req: express.Request, res: express.Response) => {
     }
 
     const token = generateToken(user.id.toString());
-    user.authentication.token = token;
-    await user.save();
-
-    res.cookie("accessToken", user.authentication.token, {
-      httpOnly: true,
-      sameSite: "strict",
-      secure: true,
+    return res.send({
+      token,
+      user: {
+        email: user.email,
+        userName: user.username,
+      },
     });
-    return res.status(200).json({ user }).end();
+
+    // user.authentication.token = token;
+    // await user.save();
+
+    // Return the token in the response body
+    return res.status(200).json({ token }).end();
   } catch (error) {
     console.error("Login error:", error);
     return res.sendStatus(500);

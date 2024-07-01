@@ -6,7 +6,6 @@ const USersSchema = new mongoose.Schema({
   authentication: {
     password: { type: String, required: true, select: false },
     salt: { type: String, select: false },
-    token: { type: String, select: true },
   },
 });
 export const UserModel = mongoose.model("User", USersSchema);

@@ -10,8 +10,8 @@ export const generateToken = (id: string) => {
 
 export const verifyToken = (token: string) => {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    return decoded;
+    const decodedUser = jwt.verify(token, JWT_SECRET);
+    return decodedUser;
   } catch (error) {
     return null;
   }
