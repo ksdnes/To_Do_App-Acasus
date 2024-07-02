@@ -17,7 +17,6 @@ const HomeScreen = () => {
     AXIOS_METHOD.GET,
     "/running-tracks"
   );
-  console.log(data);
   return (
     <SafeAreaWrapper>
       <Box flex={1} mx="4">

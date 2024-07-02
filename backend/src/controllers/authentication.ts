@@ -31,6 +31,7 @@ export const login = async (req: express.Request, res: express.Response) => {
       user: {
         email: user.email,
         userName: user.username,
+        id: user.id,
       },
     });
 

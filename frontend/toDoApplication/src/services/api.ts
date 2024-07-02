@@ -28,6 +28,7 @@ export const loginUser = async ({ email, password }: LoginUserTypes) => {
       email,
       password,
     });
+    console.log("RESPONSE: ", response.data.user);
     const token = response.data.token;
     console.log("token", token);
     axiosInstance.defaults.headers.common["authorization"] = token;

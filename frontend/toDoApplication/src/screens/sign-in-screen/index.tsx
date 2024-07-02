@@ -38,6 +38,7 @@ const SignInScreen = () => {
       updateUser({
         email: _user.email,
         name: _user.username,
+        id: _user.id,
       });
     } catch (error) {
       console.log(error);
