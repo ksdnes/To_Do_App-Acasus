@@ -14,8 +14,16 @@ const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: "black",
-        tabBarInactiveTintColor: theme.colors.gray550,
+        tabBarActiveTintColor: "orange",
+        tabBarStyle: {
+          height: 90,
+          paddingHorizontal: 5,
+          paddingTop: 0,
+          backgroundColor: "rgba(34,36,40,1)",
+          position: "absolute",
+          borderTopWidth: 0,
+        },
+        tabBarInactiveTintColor: theme.colors.orange200,
         tabBarHideOnKeyboard: true,
       }}
     >
@@ -43,7 +51,7 @@ const BottomTabNavigator = () => {
         component={AddNewTrackScreen}
         options={() => ({
           title: "Add",
-          tabBarIcon: ({ color }) => <Icons name="categories" color={color} />,
+          tabBarIcon: ({ color }) => <Icons name="add" color={color} />,
           headerShown: false,
         })}
       />
@@ -52,7 +60,7 @@ const BottomTabNavigator = () => {
         component={MeeSreen}
         options={() => ({
           title: "Me",
-          tabBarIcon: ({ color }) => <Icons name="calendar" color={color} />,
+          tabBarIcon: ({ color }) => <Icons name="me" color={color} />,
           headerShown: false,
         })}
       />
