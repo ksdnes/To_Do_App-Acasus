@@ -19,7 +19,8 @@ export const RunningTracksModel = mongoose.model(
 export const getRunningTracks = () => RunningTracksModel.find();
 export const getRunningTrackById = (id: string) =>
   RunningTracksModel.findById(id);
-
+export const getRunningTrackByUserId = (id: string) =>
+  RunningTracksModel.find({ user: id });
 export const createRunningTrack = (values: Record<string, any>) => {
   return new RunningTracksModel(values)
     .save()
