@@ -3,6 +3,6 @@ import { getAllUsers, updateUser, getOneUser } from "../controllers/users";
 import { authenticateToken, isOwner } from "../middlewares";
 export default (router: express.Router) => {
   router.get("/users", authenticateToken, getAllUsers);
-  router.get("/users/:id", authenticateToken, isOwner, getOneUser);
+  router.get("/users/:id", authenticateToken, getOneUser);
   router.patch("/users/:id", authenticateToken, isOwner, updateUser);
 };

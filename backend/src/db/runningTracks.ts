@@ -6,6 +6,7 @@ const RunningTracksSchema = new mongoose.Schema({
   location: { type: String, required: true },
   distance: { type: Number, required: true },
   estimatedDuration: { type: Number, required: true },
+  isCompleted: { type: Boolean },
   dateTime: { type: Date, required: true },
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
