@@ -6,6 +6,7 @@ import {
   getRunningTracks,
   updateRunningTrackById,
   getRunningTrackByUserId,
+  getAllCompletedRunningTracks,
 } from "../db/runningTracks";
 import {
   CreateRunningTrackInput,
@@ -22,6 +23,24 @@ export const getAllRunningTracks = async (
     return res.status(200).json(runningTracks);
   } catch (error) {
     console.error("Error fetching running tracks:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+export const getAllCompletedRunningTracksByUserId = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  const currentUserId = req.user?.id;
+  try {
+    if (!currentUserId) {
+      return res.status(404).json({ message: "Token not found" });
+    }
+    const runningTracks = await getAllCompletedRunningTracks(
+      currentUserId.toString()
+    );
+    res.status(200).json(runningTracks);
+  } catch (error) {
+    console.error("Error fetching running tracks by user ID:", error);
     res.status(500).json({ message: "Server Error" });
   }
 };
@@ -96,11 +115,13 @@ export const updateRunningTrack = async (
   res: express.Response
 ) => {
   const { id } = req.params;
-  const { name, location, distance, estimatedDuration, dateTime } = req.body;
+  const { name, location, distance, estimatedDuration, dateTime, isCompleted } =
+    req.body;
   const updatedRunningTrack: UpdateRunningTrackInput = {
     name,
     location,
     distance,
+    isCompleted,
     estimatedDuration,
     dateTime,
   };

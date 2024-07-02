@@ -6,6 +6,7 @@ import {
   updateRunningTrack,
   deleteRunningTrack,
   getAllRunningTracksByUserId,
+  getAllCompletedRunningTracksByUserId,
 } from "../controllers/runningTracks";
 import { authenticateToken, isOwner, checkOwnership } from "../middlewares";
 export default (router: express.Router) => {
@@ -19,6 +20,13 @@ export default (router: express.Router) => {
     authenticateToken,
     isOwner,
     getAllRunningTracksByUserId
+  );
+  //GET the running tracks by ID , but only those which are Completed
+  router.get(
+    "/running-tracks/user/:id/completed",
+    authenticateToken,
+    isOwner,
+    getAllCompletedRunningTracksByUserId
   );
 
   // POST a new running track (accessible to everyone)

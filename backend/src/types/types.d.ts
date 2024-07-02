@@ -33,6 +33,7 @@ export interface CreateRunningTrackInput {
   name: string;
   location: string;
   distance: Date;
+  isCompleted: boolean;
   estimatedDuration: number;
   dateTime: Date;
 }
@@ -41,6 +42,7 @@ export interface UpdateRunningTrackInput {
   name?: string;
   location?: string;
   distance?: Date;
+  isCompleted: boolean;
   estimatedDuration?: number;
   dateTime?: Date;
 }
