@@ -16,7 +16,7 @@ const SignInScreen = () => {
     navigation.navigate("SignUp");
   };
 
-  const { updateUser } = useUserGlobalStore();
+  const { user, updateUser } = useUserGlobalStore();
   const {
     control,
     handleSubmit,
@@ -37,7 +37,7 @@ const SignInScreen = () => {
       });
       updateUser({
         email: _user.email,
-        name: _user.username,
+        name: _user.userName,
         id: _user.id,
       });
     } catch (error) {

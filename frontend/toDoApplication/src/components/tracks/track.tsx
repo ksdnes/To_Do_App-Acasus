@@ -1,6 +1,6 @@
 import { HomeScreenNavigationType } from "@/navigation/types";
 import axiosInstance from "@/services/config";
-import { ITask } from "@/types";
+import { ITrack } from "@/types";
 import { AnimatedBox, Box, Text } from "@/utils/theme";
 import { Ionicon } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -16,65 +16,25 @@ import {
 import useSWRMutation from "swr/mutation";
 import { useApi, AXIOS_METHOD, setApiToken } from "@/services/useApi";
 
-type TaskProps = {
-  task: ITask;
+type TrackProps = {
+  track: ITrack;
+  user: String;
+  mutateTracks: () => Promise<ITask[] | undefined>;
 };
 
-interface ITaskStatusRequest {
+interface ITrackStatusRequest {
   id: string;
   isCompleted: boolean;
 }
 
-/*const toggleTaskStatusRequest = async (
-  url: string,
-  { arg }: { arg: ITaskStatusRequest }
-) => {
-  try {
-    await axiosInstance.put(url + "/" + arg.id, {
-      ...arg,
-    });
-  } catch (error) {
-    console.log("error in toggleTaskStatusRequest", error);
-    throw error;
-  }
-};*/
+const Track = ({ track, user, mutateTracks }: TaskProps) => {
+  const [data, loading, error] = useApi<any[]>(AXIOS_METHOD.GET, `/users`);
 
-const Track = ({ task, mutateTasks }: TaskProps) => {
-  const [data, loading, error] = useApi<any[]>(
-    AXIOS_METHOD.GET,
-    `/users/${task.user}`
-  );
   const offset = useSharedValue(1);
   const checkmarkIconSize = useSharedValue(0.8);
 
   const navigation = useNavigation<HomeScreenNavigationType>();
-
-  /*const toggleTaskStatus = async () => {
-    try {
-      const _updatedTask = {
-        id: task._id,
-        isCompleted: !task.isCompleted,
-      };
-      await trigger(_updatedTask);
-      await mutateTasks();
-      if (!_updatedTask.isCompleted) {
-        offset.value = 1;
-        checkmarkIconSize.value = 0;
-      } else {
-        offset.value = 1.1;
-        checkmarkIconSize.value = 1;
-      }
-    } catch (error) {
-      console.log("error in toggleTaskStatus", error);
-      throw error;
-    }
-  };
-*/
-  const navigateToEditTask = () => {
-    navigation.navigate("EditTask", {
-      task,
-    });
-  };
+  console.log("track :", track);
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
@@ -85,13 +45,18 @@ const Track = ({ task, mutateTasks }: TaskProps) => {
   const checkMarkIconStyles = useAnimatedStyle(() => {
     return {
       transform: [{ scale: withSpring(checkmarkIconSize.value) }],
-      opacity: data?.isCompleted === true ? offset.value : 0,
+      opacity: track?.isCompleted === true ? offset.value : 0,
     };
   });
+  const navigateToEditTrack = () => {
+    navigation.navigate("EditTrack", {
+      track,
+    });
+  };
 
-  return (
+  return track ? (
     <AnimatedBox entering={FadeInRight} exiting={FadeInLeft}>
-      <Pressable>
+      <Pressable onLongPress={navigateToEditTrack}>
         <Box
           p="4"
           bg="lightGray"
@@ -107,36 +72,40 @@ const Track = ({ task, mutateTasks }: TaskProps) => {
               <Box
                 height={26}
                 width={26}
-                bg={task.isCompleted === true ? "gray9" : "gray300"}
+                bg={track.isCompleted === true ? "gray9" : "gray300"}
                 borderRadius="rounded-xl"
                 alignItems="center"
                 justifyContent="center"
               >
-                {task.isCompleted === true && (
+                {track.isCompleted === true && (
                   <AnimatedBox style={[checkMarkIconStyles]}></AnimatedBox>
                 )}
               </Box>
             </AnimatedBox>
             <Text ml="3" variant="textXl">
-              {task.name}
+              {track.name}
             </Text>
           </Box>
           <Box></Box>
           <Text ml="3" variant="textXl">
-            {`Location: ${task.location}`}
+            {`Location: ${track.location}`}
           </Text>
           <Text ml="3" variant="textXl">
-            {`Distance: ${task.distance} km`}
+            {`Distance: ${track.distance} km`}
           </Text>
           <Text ml="3" variant="textXl">
-            {`Estimated Duration: ${task.estimatedDuration}`}
+            {`Estimated Duration: ${track.estimatedDuration}`}
           </Text>
           <Text ml="3" variant="textXl">
-            {`Username: ${data?.username}`}
+            {`Username: ${user}`}
           </Text>
         </Box>
       </Pressable>
     </AnimatedBox>
+  ) : (
+    <Box>
+      <Text>Track not found</Text>
+    </Box>
   );
 };
 

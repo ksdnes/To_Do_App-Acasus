@@ -15,8 +15,8 @@ import Track from "@/components/tracks/track";
 const MeeScreen = () => {
   const navigation = useNavigation<AuthScreenNavigationType<"Me">>();
   const [triggerLogout, setTriggerLogout] = useState(false);
+
   const { user, updateUser } = useUserGlobalStore();
-  console.log("user here:", user.id);
   const handleLogout = async () => {
     try {
       updateUser(null);
@@ -29,27 +29,28 @@ const MeeScreen = () => {
     AXIOS_METHOD.GET,
     `/running-tracks/user/${user.id}`
   );
-  console.log(data);
   return (
     <SafeAreaWrapper>
-      <Box flex={1} mx="4">
-        <Box height={26}>
-          <Text>Lets check your tracks</Text>
-        </Box>
-        <Box height={26} />
-        <FlatList
-          data={data}
-          renderItem={({ item }) => <Track task={item} />}
-          ItemSeparatorComponent={() => <Box height={14} />}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(item) => item._id}
-        />
-      </Box>
       <Pressable onPress={handleLogout}>
         <Text color="primary" textAlign="right" ml="1">
           Logout
         </Text>
       </Pressable>
+      <Box flex={1} mx="4">
+        <Box height={26}>
+          <Text ml="3" variant="textXl">
+            Lets check your tracks
+          </Text>
+        </Box>
+        <Box height={26} />
+        <FlatList
+          data={data}
+          renderItem={({ item }) => <Track track={item} user={user.name} />}
+          ItemSeparatorComponent={() => <Box height={14} />}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item) => item._id}
+        />
+      </Box>
     </SafeAreaWrapper>
   );
 };

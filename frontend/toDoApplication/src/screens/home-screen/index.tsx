@@ -3,20 +3,29 @@ import SafeAreaWrapper from "@/components/shared/safe-area-wrapper";
 import Track from "@/components/tracks/track";
 import { fetcher } from "@/services/config";
 import useUserGlobalStore from "@/store/useUserGlobalStore";
-import { ICategory, ITask } from "@/types";
+import { ITrack } from "@/types";
 import { getGreeting } from "@/utils/helpers";
 import { Box, Text } from "@/utils/theme";
 import React from "react";
 import { FlatList } from "react-native";
 import { ZoomInEasyDown } from "react-native-reanimated";
-
-import { useApi, AXIOS_METHOD, setApiToken } from "@/services/useApi";
+import useSWR from "swr";
 
 const HomeScreen = () => {
-  const [data, loading, error] = useApi<any[]>(
-    AXIOS_METHOD.GET,
-    "/running-tracks"
-  );
+  //get the user information
+  const { user } = useUserGlobalStore();
+
+  //get all the tracks
+  const {
+    data,
+    isLoading,
+    mutate: mutateTracks,
+  } = useSWR<ITrack[]>("running-tracks/", fetcher);
+
+  if (isLoading || !data) {
+    return <Loader />;
+  }
+
   return (
     <SafeAreaWrapper>
       <Box flex={1} mx="4">
@@ -24,7 +33,9 @@ const HomeScreen = () => {
         <Box height={26} />
         <FlatList
           data={data}
-          renderItem={({ item }) => <Track task={item} />}
+          renderItem={({ item }) => (
+            <Track mutateTracks={mutateTracks} track={item} user={user.name} />
+          )}
           ItemSeparatorComponent={() => <Box height={14} />}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item) => item._id}

@@ -41,6 +41,7 @@ function doApiCall<T>(
       }
     });
 }
+export default doApiCall;
 
 export function useApi<T>(
   method: AXIOS_METHOD,
