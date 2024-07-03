@@ -12,9 +12,7 @@ import useSWR from "swr";
 import { LinearGradient } from "expo-linear-gradient";
 
 const HomeScreen = () => {
-  //get the user information
   const { user } = useUserGlobalStore();
-  //get all the tracks
   const {
     data,
     isLoading,

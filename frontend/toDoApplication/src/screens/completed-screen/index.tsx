@@ -41,7 +41,9 @@ const CompletedScreen = () => {
         style={{ flex: 1 }}
       >
         <Box flex={1} mx="4">
-          <Box height={26} />
+          <Box my="4">
+            <Text variant="textXl">Let's check all the completed tracks</Text>
+          </Box>
           <Box height={26} />
           <FlatList
             data={tracks}

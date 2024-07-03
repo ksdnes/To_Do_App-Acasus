@@ -1,7 +1,7 @@
-import { createBox, createText, createTheme } from "@shopify/restyle"
-import Animated from "react-native-reanimated"
-import { colors } from "./colors"
-import { textVariants } from "./text-variants"
+import { createBox, createText, createTheme } from "@shopify/restyle";
+import Animated from "react-native-reanimated";
+import { colors } from "./colors";
+import { textVariants } from "./text-variants";
 
 const theme = createTheme({
   colors: colors,
@@ -30,13 +30,13 @@ const theme = createTheme({
     "rounded-7xl": 28,
   },
   textVariants,
-})
+});
 
-export type Theme = typeof theme
+export type Theme = typeof theme;
 
-export const Box = createBox<Theme>()
-export const Text = createText<Theme>()
-export const AnimatedText = Animated.createAnimatedComponent(Text)
-export const AnimatedBox = Animated.createAnimatedComponent(Box)
+export const Box = createBox<Theme>();
+export const Text = createText<Theme>();
+export const AnimatedText = Animated.createAnimatedComponent(Text);
+export const AnimatedBox = Animated.createAnimatedComponent(Box);
 
-export default theme
+export default theme;

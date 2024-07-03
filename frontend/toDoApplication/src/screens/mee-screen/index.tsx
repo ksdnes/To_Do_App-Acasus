@@ -4,7 +4,7 @@ import Track from "@/components/tracks/track";
 import { fetcher } from "@/services/config";
 import useUserGlobalStore from "@/store/useUserGlobalStore";
 import { ITrack } from "@/types";
-import { Box, Text } from "@/utils/theme";
+import { Box, Text, AnimatedText } from "@/utils/theme";
 import React from "react";
 import { FlatList } from "react-native";
 import { ZoomInEasyDown } from "react-native-reanimated";
@@ -64,7 +64,16 @@ const MeeScreen = () => {
         </Box>
 
         <Box flex={1} mx="4">
-          <Box height={26} />
+          <Box my="4">
+            <AnimatedText
+              variant="textXl"
+              fontWeight="500"
+              entering={ZoomInEasyDown.delay(300).duration(500)}
+            >
+              Hello {user.name}
+            </AnimatedText>
+            <Text variant="textXl">Let's check all of your tracks</Text>
+          </Box>
           <Box height={26} />
           <FlatList
             data={tracks}
