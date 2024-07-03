@@ -70,6 +70,7 @@ const SignUpScreen = () => {
               <Input
                 label="Username"
                 onBlur={onBlur}
+                autoFocus={true}
                 onChangeText={onChange}
                 value={value}
                 placeholder="Username"

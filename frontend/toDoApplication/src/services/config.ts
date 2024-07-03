@@ -3,7 +3,6 @@ import * as SecureStore from "expo-secure-store";
 
 export const BASE_URL = "http://localhost:8080/";
 export const TOKEN_NAME = "authorization";
-
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 30000,

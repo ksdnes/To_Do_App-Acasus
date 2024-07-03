@@ -73,6 +73,7 @@ const SignInScreen = () => {
               <Input
                 label="Email"
                 onBlur={onBlur}
+                autoFocus={true}
                 onChangeText={onChange}
                 value={value}
                 placeholder="Email"
