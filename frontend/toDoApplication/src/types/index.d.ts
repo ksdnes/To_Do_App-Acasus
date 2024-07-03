@@ -23,21 +23,6 @@ export interface IIcon {
   symbol: string;
 }
 
-interface ICategory {
-  _id: string;
-  name: string;
-  user: IUser | string;
-  isEditable: boolean;
-  color: IColor;
-  icon: IIcon;
-}
-
-interface ICategoryRequest {
-  name: string;
-  color: IColor;
-  icon: IIcon;
-}
-
 interface ITrack {
   id: string;
   name: string;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Text } from "@/utils/theme";
 import { TextInput } from "react-native";
 import SafeAreaWrapper from "@/components/shared/safe-area-wrapper";
@@ -35,7 +35,7 @@ const AddNewTrackScreen = () => {
     createTaskRequest
   );
 
-  const [newTrack, setNewTrack] = useState<ITrackkRequest>({
+  const [newTrack, setNewTrack] = React.useState<ITrackkRequest>({
     name: "",
     location: "",
     distance: 0,

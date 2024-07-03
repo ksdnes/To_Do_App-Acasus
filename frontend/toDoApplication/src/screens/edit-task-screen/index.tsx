@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Text } from "@/utils/theme";
 import { TextInput } from "react-native";
 import SafeAreaWrapper from "@/components/shared/safe-area-wrapper";
@@ -65,7 +65,7 @@ const EditTrackScreen = () => {
     deleteTaskRequest
   );
 
-  const [updatedTrack, setUpdatedTrack] = useState<ITrackkRequest>({
+  const [updatedTrack, setUpdatedTrack] = React.useState<ITrackkRequest>({
     name: track.name,
     location: track.location,
     distance: track.distance,
