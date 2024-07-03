@@ -7,7 +7,6 @@ export const TOKEN_NAME = "authorization";
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 30000,
-  withCredentials: true, // Ensure Axios sends cookies
 });
 
 export const saveToken = async (key: string, value: string) => {

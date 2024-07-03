@@ -6,7 +6,7 @@ import React from "react";
 const Navigation = () => {
   const { user, updateUser } = useUserGlobalStore();
   React.useEffect(() => {
-    console.log("user" + user);
+    console.log("Welcome back " + user?.name);
   }, [user]);
   return (
     <NavigationContainer>

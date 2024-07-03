@@ -10,18 +10,22 @@ import Button from "@/components/shared/button";
 import { useTheme } from "@shopify/restyle";
 import useSWR, { useSWRConfig } from "swr";
 import useSWRMutation from "swr/mutation";
+import useUserGlobalStore from "@/store/useUserGlobalStore";
 
 type EditTrackRouteType = {
   params: {
     track: IRunningTrack;
+    mutateTracks: () => Promise<ITask[] | undefined>;
   };
 };
 
 const EditTrackScreen = () => {
+  const { user } = useUserGlobalStore();
+
   const theme = useTheme();
   const navigation = useNavigation();
   const route = useRoute<EditTrackRouteType>();
-  const { track } = route.params;
+  const { track, mutateTracks } = route.params;
 
   const { mutate } = useSWRConfig();
 
@@ -90,7 +94,8 @@ const EditTrackScreen = () => {
       await triggerDelete({
         id: track._id,
       });
-      await mutate("/running-tracks");
+      await mutate(`/running-tracks/users/${user.id}`);
+      mutateTracks(); // Trigger refresh in MeeScreen
       navigation.goBack();
     } catch (error) {
       console.error("Error deleting track:", error);
@@ -105,7 +110,9 @@ const EditTrackScreen = () => {
         _id: track._id,
         ...fieldsToUpdate,
       });
-      await mutate("/running-tracks");
+      await mutate(`/running-tracks/users/${user.id}`);
+      mutateTracks(); // Trigger refresh in MeeScreen
+
       navigation.goBack();
     } catch (error) {
       console.error("Error updating track:", error);

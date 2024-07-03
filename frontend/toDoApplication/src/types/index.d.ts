@@ -43,7 +43,7 @@ interface ITrack {
   name: string;
   isCompleted: boolean;
   duration: Number;
-  dateTime: Date;
+  dateTime: string;
   distance: Number;
   location: string;
 }
@@ -52,7 +52,7 @@ interface ITrackkRequest {
   name?: string;
   isCompleted?: boolean;
   duration?: Number;
-  dateTime?: Date;
+  dateTime?: string;
   distance?: Number;
   location?: string;
 }

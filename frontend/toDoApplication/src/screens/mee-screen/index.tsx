@@ -24,7 +24,6 @@ const MeeScreen = () => {
       console.error("Logout failed", error);
     }
   };
-  console.log("userrrr:" + user.id);
   const {
     data: tracks,
     isLoading,
@@ -48,7 +47,7 @@ const MeeScreen = () => {
         <FlatList
           data={tracks}
           renderItem={({ item }) => (
-            <Track mutateTracks={mutateTracks} track={item} user={user.name} />
+            <Track mutateTracks={mutateTracks} track={item} user={user} />
           )}
           ItemSeparatorComponent={() => <Box height={14} />}
           showsVerticalScrollIndicator={false}

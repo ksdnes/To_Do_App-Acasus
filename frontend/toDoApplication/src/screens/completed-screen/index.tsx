@@ -27,7 +27,7 @@ const CompletedScreen = () => {
   const {
     data: tracks,
     isLoading,
-    mutate: mutateTracks,
+    mutate: mutateTracks, //ez jól befrissül
   } = useSWR<ITrack[]>(`/running-tracks/user/${user.id}/completed`, fetcher);
 
   if (isLoading || !tracks) {
@@ -42,7 +42,7 @@ const CompletedScreen = () => {
         <FlatList
           data={tracks}
           renderItem={({ item }) => (
-            <Track mutateTracks={mutateTracks} track={item} user={user.name} />
+            <Track mutateTracks={mutateTracks} track={item} user={user} />
           )}
           ItemSeparatorComponent={() => <Box height={14} />}
           showsVerticalScrollIndicator={false}

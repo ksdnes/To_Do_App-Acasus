@@ -14,14 +14,13 @@ import useSWR from "swr";
 const HomeScreen = () => {
   //get the user information
   const { user } = useUserGlobalStore();
-
   //get all the tracks
   const {
     data,
     isLoading,
     mutate: mutateTracks,
   } = useSWR<ITrack[]>("running-tracks/", fetcher);
-
+  console.log("data", data);
   if (isLoading || !data) {
     return <Loader />;
   }
@@ -34,7 +33,7 @@ const HomeScreen = () => {
         <FlatList
           data={data}
           renderItem={({ item }) => (
-            <Track mutateTracks={mutateTracks} track={item} user={user.name} />
+            <Track mutateTracks={mutateTracks} track={item} user={user} />
           )}
           ItemSeparatorComponent={() => <Box height={14} />}
           showsVerticalScrollIndicator={false}
