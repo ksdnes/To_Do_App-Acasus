@@ -17,7 +17,6 @@ export interface User {
   };
 }
 
-//comment RUNNING
 export interface RunningTrack {
   name: string;
   location: string;
