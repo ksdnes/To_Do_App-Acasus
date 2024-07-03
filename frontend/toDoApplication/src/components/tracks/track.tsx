@@ -60,8 +60,6 @@ const Track = ({ track, user, mutateTracks }: TrackProps) => {
     });
   };
 
-  //TOGLE
-
   const { trigger: triggerUpdate } = useSWRMutation(
     "/running-tracks",
     toggleTaskStatusRequest
@@ -88,9 +86,7 @@ const Track = ({ track, user, mutateTracks }: TrackProps) => {
         _id: track._id,
         ...updatedTask,
       });
-      //await mutateTracks(`/running-tracks`);
       mutateTracks();
-      console.log("mutate in the track");
       if (!updatedTask.isCompleted) {
         offset.value = 1;
         checkmarkIconSize.value = 0;

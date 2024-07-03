@@ -28,7 +28,7 @@ const Button = ({
   return (
     <Pressable onPress={onPress} onLongPress={onLongPress} disabled={disabled}>
       <Box
-        bg={disabled ? "gray800" : backgroundColor || "primary"} // Correct the ternary logic
+        bg={disabled ? "gray800" : backgroundColor || "primary"}
         py="3.5"
         px="3.5"
         borderRadius="rounded-7xl"

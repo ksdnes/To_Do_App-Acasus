@@ -8,7 +8,7 @@ import { Box, Text } from "@/utils/theme";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Pressable } from "react-native";
+import { Pressable, Alert } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 const SignInScreen = () => {
@@ -42,7 +42,7 @@ const SignInScreen = () => {
         id: _user.id,
       });
     } catch (error) {
-      console.log(error);
+      Alert.alert("Login Failed", "Incorrect email or password");
     }
   };
 

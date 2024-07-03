@@ -20,7 +20,7 @@ const CompletedScreen = () => {
   const {
     data: tracks,
     isLoading,
-    mutate: mutateTracks, //ez jól befrissül
+    mutate: mutateTracks,
   } = useSWR<ITrack[]>(`/running-tracks/user/${user.id}/completed`, fetcher, {
     refreshInterval: 2000,
   });
