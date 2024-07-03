@@ -10,6 +10,7 @@ import React from "react";
 import { FlatList } from "react-native";
 import { ZoomInEasyDown } from "react-native-reanimated";
 import useSWR from "swr";
+import { LinearGradient } from "expo-linear-gradient";
 
 const HomeScreen = () => {
   //get the user information
@@ -27,19 +28,31 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaWrapper>
-      <Box flex={1} mx="4">
-        <Box height={26} />
-        <Box height={26} />
-        <FlatList
-          data={data}
-          renderItem={({ item }) => (
-            <Track mutateTracks={mutateTracks} track={item} user={user} />
-          )}
-          ItemSeparatorComponent={() => <Box height={14} />}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(item) => item._id}
-        />
-      </Box>
+      <LinearGradient
+        colors={[
+          "#ffcc66",
+          "#ffe6b3",
+          "#fff7e6",
+          "#fff7e6",
+          "#ffe6b3",
+          "#ffcc66",
+        ]}
+        style={{ flex: 1 }}
+      >
+        <Box flex={1} mx="4">
+          <Box height={26} />
+          <Box height={26} />
+          <FlatList
+            data={data}
+            renderItem={({ item }) => (
+              <Track mutateTracks={mutateTracks} track={item} user={user} />
+            )}
+            ItemSeparatorComponent={() => <Box height={10} />}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(item) => item._id}
+          />
+        </Box>
+      </LinearGradient>
     </SafeAreaWrapper>
   );
 };

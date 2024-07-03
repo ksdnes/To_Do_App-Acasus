@@ -12,7 +12,12 @@ import { ZoomInEasyDown } from "react-native-reanimated";
 import useSWR from "swr";
 import { useNavigation } from "@react-navigation/native";
 import { Pressable } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import Button from "@/components/shared/button";
+import { useTheme } from "@shopify/restyle";
+
 const MeeScreen = () => {
+  const theme = useTheme();
   const navigation = useNavigation<AuthScreenNavigationType<"Me">>();
   const [triggerLogout, setTriggerLogout] = React.useState(false);
 
@@ -36,24 +41,44 @@ const MeeScreen = () => {
 
   return (
     <SafeAreaWrapper>
-      <Pressable onPress={handleLogout}>
-        <Text color="primary" textAlign="right" ml="1">
-          Logout
-        </Text>
-      </Pressable>
-      <Box flex={1} mx="4">
-        <Box height={26} />
-        <Box height={26} />
-        <FlatList
-          data={tracks}
-          renderItem={({ item }) => (
-            <Track mutateTracks={mutateTracks} track={item} user={user} />
-          )}
-          ItemSeparatorComponent={() => <Box height={14} />}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={(item) => item._id}
-        />
-      </Box>
+      <LinearGradient
+        colors={[
+          "#ffcc66",
+          "#ffe6b3",
+          "#fff7e6",
+          "#fff7e6",
+          "#ffe6b3",
+          "#ffcc66",
+        ]}
+        style={{ flex: 1 }}
+      >
+        <Box mt="4">
+          <Button
+            onPress={handleLogout}
+            title="Logout"
+            backgroundColor="orange400"
+            iconBeforeText={{
+              name: "logout",
+              size: 24,
+              color: theme.colors.white,
+            }}
+          />
+        </Box>
+
+        <Box flex={1} mx="4">
+          <Box height={26} />
+          <Box height={26} />
+          <FlatList
+            data={tracks}
+            renderItem={({ item }) => (
+              <Track mutateTracks={mutateTracks} track={item} user={user} />
+            )}
+            ItemSeparatorComponent={() => <Box height={14} />}
+            showsVerticalScrollIndicator={false}
+            keyExtractor={(item) => item._id}
+          />
+        </Box>
+      </LinearGradient>
     </SafeAreaWrapper>
   );
 };

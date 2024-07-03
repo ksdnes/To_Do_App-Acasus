@@ -9,6 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 const SignInScreen = () => {
   const navigation = useNavigation<AuthScreenNavigationType<"SignIn">>();
@@ -47,67 +48,79 @@ const SignInScreen = () => {
 
   return (
     <SafeAreaWrapper>
-      <Box flex={1} px="5.5" justifyContent="center">
-        <Text variant="textXl" fontWeight="700">
-          Welcome Back
-        </Text>
-        <Box mb="6" />
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label="Email"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Email"
-              error={errors.email}
-            />
-          )}
-          name="email"
-        />
-        <Box mb="6" />
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <Input
-              label="Password"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              placeholder="Password"
-              error={errors.password}
-              secureTextEntry
-            />
-          )}
-          name="password"
-        />
-        <Box mt="5.5" />
-        <Box flexDirection="row" alignItems="right" justifyContent="flex-end">
-          <Text color="primary" textAlign="right">
-            Do not have an account yet?
+      <LinearGradient
+        colors={[
+          "#ffcc66",
+          "#ffe6b3",
+          "#fff7e6",
+          "#fff7e6",
+          "#ffe6b3",
+          "#ffcc66",
+        ]}
+        style={{ flex: 1 }}
+      >
+        <Box flex={1} px="5.5" justifyContent="center">
+          <Text variant="textXl" fontWeight="700">
+            Welcome Back
           </Text>
-          <Pressable onPress={navigateToSignInScreen}>
-            <Text color="primary" textAlign="right" ml="1">
-              Sign up!
+          <Box mb="6" />
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="Email"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Email"
+                error={errors.email}
+              />
+            )}
+            name="email"
+          />
+          <Box mb="6" />
+          <Controller
+            control={control}
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <Input
+                label="Password"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                placeholder="Password"
+                error={errors.password}
+                secureTextEntry
+              />
+            )}
+            name="password"
+          />
+          <Box mt="5.5" />
+          <Box flexDirection="row" alignItems="right" justifyContent="flex-end">
+            <Text color="primary" textAlign="right">
+              Do not have an account yet?
             </Text>
-          </Pressable>
-        </Box>
-        <Box mb="5.5" />
+            <Pressable onPress={navigateToSignInScreen}>
+              <Text color="primary" textAlign="right" ml="1">
+                Sign up!
+              </Text>
+            </Pressable>
+          </Box>
+          <Box mb="5.5" />
 
-        <Button
-          title="Login"
-          onPress={handleSubmit(onSubmit)}
-          uppercase
-          backgroundColor="orange400"
-        />
-      </Box>
+          <Button
+            title="Login"
+            onPress={handleSubmit(onSubmit)}
+            uppercase
+            backgroundColor="orange400"
+          />
+        </Box>
+      </LinearGradient>
     </SafeAreaWrapper>
   );
 };
