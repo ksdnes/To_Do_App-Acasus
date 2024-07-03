@@ -15,6 +15,7 @@ import {
 } from "react-native-reanimated";
 import useSWRMutation from "swr/mutation";
 import { useApi, AXIOS_METHOD, setApiToken } from "@/services/useApi";
+import { Modal } from "@/components/shared/modal";
 
 type TrackProps = {
   track: ITrack;
@@ -40,12 +41,20 @@ const toggleTaskStatusRequest = async (
 };
 const Track = ({ track, user, mutateTracks }: TrackProps) => {
   const [data, loading, error] = useApi<any[]>(AXIOS_METHOD.GET, `/users`);
-
+  const [isModalVisible, setIsModalVisible] = React.useState<boolean>(false);
   const offset = useSharedValue(1);
   const checkmarkIconSize = useSharedValue(0.8);
 
   const navigation = useNavigation<HomeScreenNavigationType>();
+  const handleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
   const navigateToEditTrack = () => {
+    if (user.id !== track.user) {
+      handleModal();
+      console.log(isModalVisible);
+      return;
+    }
     navigation.navigate("EditTrack", {
       track,
       mutateTracks,
@@ -94,59 +103,67 @@ const Track = ({ track, user, mutateTracks }: TrackProps) => {
     }
   };
   return track ? (
-    <AnimatedBox entering={FadeInRight} exiting={FadeInLeft}>
-      <Pressable onLongPress={navigateToEditTrack}>
-        <Box
-          p="4"
-          bg="lightGray"
-          borderRadius="rounded-5xl"
-          flexDirection="column"
-        >
-          <Box flexDirection="row" alignItems="center">
-            <AnimatedBox
-              style={[animatedStyles]}
-              flexDirection="row"
-              alignItems="center"
-            >
-              {user.id === track.user && (
-                <Pressable onPress={toggleTaskStatus}>
-                  <Box
-                    height={26}
-                    width={26}
-                    bg={track.isCompleted === true ? "gray9" : "gray300"}
-                    borderRadius="rounded-xl"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    {track.isCompleted === true && (
-                      <AnimatedBox style={[checkMarkIconStyles]}>
-                        <Ionicons name="checkmark" size={20} color="white" />
-                      </AnimatedBox>
-                    )}
-                  </Box>
-                </Pressable>
-              )}
-            </AnimatedBox>
+    <>
+      <AnimatedBox entering={FadeInRight} exiting={FadeInLeft}>
+        <Pressable onLongPress={navigateToEditTrack}>
+          <Box
+            p="4"
+            bg="lightGray"
+            borderRadius="rounded-5xl"
+            flexDirection="column"
+          >
+            <Box flexDirection="row" alignItems="center">
+              <AnimatedBox
+                style={[animatedStyles]}
+                flexDirection="row"
+                alignItems="center"
+              >
+                {user.id === track.user && (
+                  <Pressable onPress={toggleTaskStatus}>
+                    <Box
+                      height={26}
+                      width={26}
+                      bg={track.isCompleted === true ? "gray9" : "gray300"}
+                      borderRadius="rounded-xl"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      {track.isCompleted === true && (
+                        <AnimatedBox style={[checkMarkIconStyles]}>
+                          <Ionicons name="checkmark" size={20} color="white" />
+                        </AnimatedBox>
+                      )}
+                    </Box>
+                  </Pressable>
+                )}
+              </AnimatedBox>
+              <Text ml="3" variant="textXl">
+                {track.name}
+              </Text>
+            </Box>
+            <Box></Box>
             <Text ml="3" variant="textXl">
-              {track.name}
+              {`Location: ${track.location}`}
+            </Text>
+            <Text ml="3" variant="textXl">
+              {`Distance: ${track.distance} km`}
+            </Text>
+            <Text ml="3" variant="textXl">
+              {`Estimated Duration: ${track.estimatedDuration}`}
+            </Text>
+            <Text ml="3" variant="textXl">
+              {`Username: ${user.name}`}
             </Text>
           </Box>
-          <Box></Box>
-          <Text ml="3" variant="textXl">
-            {`Location: ${track.location}`}
-          </Text>
-          <Text ml="3" variant="textXl">
-            {`Distance: ${track.distance} km`}
-          </Text>
-          <Text ml="3" variant="textXl">
-            {`Estimated Duration: ${track.estimatedDuration}`}
-          </Text>
-          <Text ml="3" variant="textXl">
-            {`Username: ${user.name}`}
-          </Text>
-        </Box>
-      </Pressable>
-    </AnimatedBox>
+        </Pressable>
+      </AnimatedBox>
+      <Modal
+        isVisible={isModalVisible}
+        title={`Permission denied`}
+        description={`You are not the owner of this track : ${track.name}`}
+        onClose={handleModal}
+      />
+    </>
   ) : (
     <Box>
       <Text>Track not found</Text>
