@@ -182,20 +182,6 @@ const EditTrackScreen = () => {
             style={{ borderBottomWidth: 1, paddingVertical: 8 }}
           />
         </Box>
-        <Box my="2">
-          <Text variant="textXl">Status</Text>
-          <TextInput
-            placeholder="isCompleted"
-            value={updatedTrack.isCompleted ? "completed" : "pending"}
-            onChangeText={(text) =>
-              setUpdatedTrack({
-                ...updatedTrack,
-                isCompleted: text.toLowerCase() === "completed",
-              })
-            }
-            style={{ borderBottomWidth: 1, paddingVertical: 8 }}
-          />
-        </Box>
         <Box my="4">
           <Text variant="textXl">Date Time</Text>
           <Text variant="textSm">

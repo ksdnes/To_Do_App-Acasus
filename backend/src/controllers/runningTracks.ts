@@ -95,7 +95,7 @@ export const createRunningTrackHandler = async (
     name,
     location,
     distance,
-    isCompleted,
+    isCompleted: false,
     estimatedDuration,
     dateTime,
     user: userId,

@@ -49,6 +49,7 @@ const AddNewTrackScreen = () => {
     name: "",
     location: "",
     distance: 0,
+    isCompleted: false,
     estimatedDuration: 0,
     dateTime: new Date().toISOString(),
   });
