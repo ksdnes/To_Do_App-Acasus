@@ -198,16 +198,11 @@ const EditTrackScreen = () => {
             style={{ borderBottomWidth: 1, paddingVertical: 8 }}
           />
         </Box>
-        <Box my="2">
+        <Box my="4">
           <Text variant="textXl">Date Time</Text>
-          <TextInput
-            placeholder="Date Time"
-            value={updatedTrack.dateTime.toString()}
-            onChangeText={(text) =>
-              setUpdatedTrack({ ...updatedTrack, dateTime: new Date(text) })
-            }
-            style={{ borderBottomWidth: 1, paddingVertical: 8 }}
-          />
+          <Text variant="textSm">
+            {new Date(updatedTrack.dateTime).toLocaleString()}
+          </Text>
         </Box>
         <Box flexDirection="row" justifyContent="space-between">
           <Button
