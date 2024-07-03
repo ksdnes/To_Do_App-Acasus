@@ -4,7 +4,6 @@ import Track from "@/components/tracks/track";
 import { fetcher } from "@/services/config";
 import useUserGlobalStore from "@/store/useUserGlobalStore";
 import { ITrack } from "@/types";
-import { getGreeting } from "@/utils/helpers";
 import { Box, Text } from "@/utils/theme";
 import React from "react";
 import { FlatList } from "react-native";
@@ -38,9 +37,10 @@ const HomeScreen = () => {
         ]}
         style={{ flex: 1 }}
       >
-        <Box flex={1} mx="4">
-          <Box height={26} />
-          <Box height={26} />
+        <Box flex={1} mx="4" my="4">
+          <Box my="4">
+            <Text variant="textXl">Let's check all the tracks</Text>
+          </Box>
           <FlatList
             data={data}
             renderItem={({ item }) => (

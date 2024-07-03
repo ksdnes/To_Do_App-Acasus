@@ -129,8 +129,11 @@ const EditTrackScreen = () => {
         borderRadius="rounded-5xl"
         position="relative"
       >
-        <NavigateBack />
+        <Box flexDirection="row">
+          <NavigateBack />
+        </Box>
         <Box my="2">
+          <Text variant="textXl">Name</Text>
           <TextInput
             placeholder="Name"
             value={updatedTrack.name}
@@ -141,6 +144,7 @@ const EditTrackScreen = () => {
           />
         </Box>
         <Box my="2">
+          <Text variant="textXl">Location</Text>
           <TextInput
             placeholder="Location"
             value={updatedTrack.location}
@@ -151,6 +155,7 @@ const EditTrackScreen = () => {
           />
         </Box>
         <Box my="2">
+          <Text variant="textXl">Distance</Text>
           <TextInput
             placeholder="Distance"
             value={updatedTrack.distance.toString()}
@@ -165,6 +170,7 @@ const EditTrackScreen = () => {
           />
         </Box>
         <Box my="2">
+          <Text variant="textXl">Estimated Duration</Text>
           <TextInput
             placeholder="Estimated Duration"
             value={updatedTrack.estimatedDuration.toString()}
@@ -179,6 +185,7 @@ const EditTrackScreen = () => {
           />
         </Box>
         <Box my="2">
+          <Text variant="textXl">Status</Text>
           <TextInput
             placeholder="isCompleted"
             value={updatedTrack.isCompleted ? "completed" : "pending"}
@@ -192,6 +199,7 @@ const EditTrackScreen = () => {
           />
         </Box>
         <Box my="2">
+          <Text variant="textXl">Date Time</Text>
           <TextInput
             placeholder="Date Time"
             value={updatedTrack.dateTime.toString()}
