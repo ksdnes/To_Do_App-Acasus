@@ -66,6 +66,7 @@ const AddNewTrackScreen = () => {
       >
         <NavigateBack />
         <Box my="2">
+          <Text variant="textXl">Name</Text>
           <TextInput
             placeholder="Name"
             value={newTrack.name}
@@ -74,6 +75,7 @@ const AddNewTrackScreen = () => {
           />
         </Box>
         <Box my="2">
+          <Text variant="textXl">Location</Text>
           <TextInput
             placeholder="Location"
             value={newTrack.location}
@@ -84,6 +86,7 @@ const AddNewTrackScreen = () => {
           />
         </Box>
         <Box my="2">
+          <Text variant="textXl">Distance</Text>
           <TextInput
             placeholder="Distance"
             value={newTrack.distance.toString()}
@@ -98,6 +101,7 @@ const AddNewTrackScreen = () => {
           />
         </Box>
         <Box my="2">
+          <Text variant="textXl">Estimated Duration</Text>
           <TextInput
             placeholder="Estimated Duration"
             value={newTrack.estimatedDuration.toString()}
@@ -112,9 +116,10 @@ const AddNewTrackScreen = () => {
           />
         </Box>
         <Box my="2">
+          <Text variant="textXl">Completed</Text>
           <TextInput
             placeholder="isCompleted"
-            value={newTrack.isCompleted ? "completed" : "pending"}
+            value={newTrack.isCompleted}
             onChangeText={(text) =>
               setNewTrack({
                 ...newTrack,
@@ -125,6 +130,7 @@ const AddNewTrackScreen = () => {
           />
         </Box>
         <Box my="2">
+          <Text variant="textXl">Date</Text>
           <TextInput
             placeholder="Date Time"
             value={newTrack.dateTime.toString()}
