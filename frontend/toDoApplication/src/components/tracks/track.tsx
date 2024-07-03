@@ -2,10 +2,10 @@ import { HomeScreenNavigationType } from "@/navigation/types";
 import axiosInstance from "@/services/config";
 import { ITrack } from "@/types";
 import { AnimatedBox, Box, Text } from "@/utils/theme";
-import { Ionicon } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Pressable } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import {
   FadeInLeft,
   FadeInRight,
@@ -19,7 +19,7 @@ import { useApi, AXIOS_METHOD, setApiToken } from "@/services/useApi";
 type TrackProps = {
   track: ITrack;
   user: String;
-  mutateTracks: () => Promise<ITask[] | undefined>;
+  mutateTracks: () => Promise<ITrack[] | undefined>;
 };
 
 interface ITrackStatusRequest {
@@ -27,14 +27,38 @@ interface ITrackStatusRequest {
   isCompleted: boolean;
 }
 
-const Track = ({ track, user, mutateTracks }: TaskProps) => {
+const toggleTaskStatusRequest = async (
+  url: string,
+  { arg }: { arg: ITrackStatusRequest }
+) => {
+  console.log(arg._id);
+  try {
+    await axiosInstance.patch(url + "/" + arg._id, { ...arg });
+  } catch (error) {
+    console.log("error in toggleTrackStatusRequest", error);
+    throw error;
+  }
+};
+const Track = ({ track, user, mutateTracks }: TrackProps) => {
   const [data, loading, error] = useApi<any[]>(AXIOS_METHOD.GET, `/users`);
 
   const offset = useSharedValue(1);
   const checkmarkIconSize = useSharedValue(0.8);
 
   const navigation = useNavigation<HomeScreenNavigationType>();
-  console.log("track :", track);
+  const navigateToEditTrack = () => {
+    navigation.navigate("EditTrack", {
+      track,
+      mutateTracks,
+    });
+  };
+
+  //TOGLE
+
+  const { trigger: triggerUpdate } = useSWRMutation(
+    "/running-tracks",
+    toggleTaskStatusRequest
+  );
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
@@ -48,12 +72,29 @@ const Track = ({ track, user, mutateTracks }: TaskProps) => {
       opacity: track?.isCompleted === true ? offset.value : 0,
     };
   });
-  const navigateToEditTrack = () => {
-    navigation.navigate("EditTrack", {
-      track,
-    });
+  const toggleTaskStatus = async () => {
+    console.log("clicked");
+    try {
+      const updatedTask = {
+        isCompleted: !track.isCompleted,
+      };
+      await triggerUpdate({
+        _id: track._id,
+        ...updatedTask,
+      });
+      await mutateTracks(`/running-tracks`);
+      if (!updatedTask.isCompleted) {
+        offset.value = 1;
+        checkmarkIconSize.value = 0;
+      } else {
+        offset.value = 1.1;
+        checkmarkIconSize.value = 1;
+      }
+    } catch (error) {
+      console.log("error in toggleTaskStatus", error);
+      throw error;
+    }
   };
-
   return track ? (
     <AnimatedBox entering={FadeInRight} exiting={FadeInLeft}>
       <Pressable onLongPress={navigateToEditTrack}>
@@ -69,18 +110,24 @@ const Track = ({ track, user, mutateTracks }: TaskProps) => {
               flexDirection="row"
               alignItems="center"
             >
-              <Box
-                height={26}
-                width={26}
-                bg={track.isCompleted === true ? "gray9" : "gray300"}
-                borderRadius="rounded-xl"
-                alignItems="center"
-                justifyContent="center"
-              >
-                {track.isCompleted === true && (
-                  <AnimatedBox style={[checkMarkIconStyles]}></AnimatedBox>
-                )}
-              </Box>
+              {user.id === track.user && (
+                <Pressable onPress={toggleTaskStatus}>
+                  <Box
+                    height={26}
+                    width={26}
+                    bg={track.isCompleted === true ? "gray9" : "gray300"}
+                    borderRadius="rounded-xl"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    {track.isCompleted === true && (
+                      <AnimatedBox style={[checkMarkIconStyles]}>
+                        <Ionicons name="checkmark" size={20} color="white" />
+                      </AnimatedBox>
+                    )}
+                  </Box>
+                </Pressable>
+              )}
             </AnimatedBox>
             <Text ml="3" variant="textXl">
               {track.name}
@@ -97,7 +144,7 @@ const Track = ({ track, user, mutateTracks }: TaskProps) => {
             {`Estimated Duration: ${track.estimatedDuration}`}
           </Text>
           <Text ml="3" variant="textXl">
-            {`Username: ${user}`}
+            {`Username: ${user.name}`}
           </Text>
         </Box>
       </Pressable>
