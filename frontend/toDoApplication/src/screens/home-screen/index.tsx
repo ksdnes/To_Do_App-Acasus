@@ -15,9 +15,12 @@ const HomeScreen = () => {
   const { user } = useUserGlobalStore();
   const {
     data,
+    error,
     isLoading,
     mutate: mutateTracks,
-  } = useSWR<ITrack[]>("running-tracks/", fetcher);
+  } = useSWR<ITrack[]>("running-tracks/", fetcher, {
+    refreshInterval: 1000,
+  });
   if (isLoading || !data) {
     return <Loader />;
   }

@@ -21,7 +21,9 @@ const CompletedScreen = () => {
     data: tracks,
     isLoading,
     mutate: mutateTracks, //ez jól befrissül
-  } = useSWR<ITrack[]>(`/running-tracks/user/${user.id}/completed`, fetcher);
+  } = useSWR<ITrack[]>(`/running-tracks/user/${user.id}/completed`, fetcher, {
+    refreshInterval: 2000,
+  });
 
   if (isLoading || !tracks) {
     return <Loader />;

@@ -24,7 +24,7 @@ export interface IIcon {
 }
 
 interface ITrack {
-  id: string;
+  _id: string;
   name: string;
   isCompleted: boolean;
   duration: Number;

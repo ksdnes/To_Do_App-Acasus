@@ -94,8 +94,10 @@ const EditTrackScreen = () => {
       await triggerDelete({
         id: track._id,
       });
-      await mutate(`/running-tracks/users/${user.id}`);
+      //await mutate(`/running-tracks/users/${user.id}`);
       mutateTracks(); // Trigger refresh in MeeScreen
+      console.log("mutate in the edit");
+
       navigation.goBack();
     } catch (error) {
       console.error("Error deleting track:", error);

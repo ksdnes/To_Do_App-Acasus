@@ -31,12 +31,13 @@ const MeeScreen = () => {
     data: tracks,
     isLoading,
     mutate: mutateTracks,
-  } = useSWR<ITrack[]>(`/running-tracks/user/${user.id}`, fetcher);
+  } = useSWR<ITrack[]>(`/running-tracks/user/${user.id}`, fetcher, {
+    refreshInterval: 2000,
+  });
 
-  if (isLoading || !tracks) {
-    return <Loader />;
-  }
-
+  //if (isLoading || !tracks) {
+  //  return <Loader />;
+  //}
   return (
     <SafeAreaWrapper>
       <LinearGradient

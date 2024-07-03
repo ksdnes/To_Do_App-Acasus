@@ -5,9 +5,6 @@ import useUserGlobalStore from "@/store/useUserGlobalStore";
 import React from "react";
 const Navigation = () => {
   const { user, updateUser } = useUserGlobalStore();
-  React.useEffect(() => {
-    console.log("Welcome back " + user?.name);
-  }, [user]);
   return (
     <NavigationContainer>
       {!user ? <AuthStackNavigator /> : <AppStackNavigator />}

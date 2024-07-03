@@ -1,4 +1,4 @@
-import { ICategory, ITask } from "@/types";
+import { ITrack } from "@/types";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import {
   CompositeNavigationProp,
@@ -26,7 +26,7 @@ export type RootBottomTabParamList = {
 export type HomeStackParamList = {
   Home: undefined;
   EditTrack: {
-    Track: ITask;
+    Track: ITrack;
   };
 };
 

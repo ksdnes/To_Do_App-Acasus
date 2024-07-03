@@ -52,7 +52,6 @@ const Track = ({ track, user, mutateTracks }: TrackProps) => {
   const navigateToEditTrack = () => {
     if (user.id !== track.user) {
       handleModal();
-      console.log(isModalVisible);
       return;
     }
     navigation.navigate("EditTrack", {
@@ -89,7 +88,9 @@ const Track = ({ track, user, mutateTracks }: TrackProps) => {
         _id: track._id,
         ...updatedTask,
       });
-      await mutateTracks(`/running-tracks`);
+      //await mutateTracks(`/running-tracks`);
+      mutateTracks();
+      console.log("mutate in the track");
       if (!updatedTask.isCompleted) {
         offset.value = 1;
         checkmarkIconSize.value = 0;

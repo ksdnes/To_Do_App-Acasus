@@ -5,7 +5,7 @@ import SafeAreaWrapper from "@/components/shared/safe-area-wrapper";
 import NavigateBack from "@/components/shared/navigate-back";
 import { useNavigation } from "@react-navigation/native";
 import axiosInstance from "@/services/config";
-import { ITrackkRequest2 } from "@/types";
+import { ITrackkRequest } from "@/types";
 import Button from "@/components/shared/button";
 import { useTheme } from "@shopify/restyle";
 import useSWRConfig from "swr";
@@ -28,7 +28,7 @@ const AddNewTrackScreen = () => {
 
   const createTaskRequest = async (
     url: string,
-    { arg }: { arg: ITrackkRequest2 }
+    { arg }: { arg: ITrackkRequest }
   ) => {
     try {
       const response = await axiosInstance.post(url, {
@@ -45,12 +45,11 @@ const AddNewTrackScreen = () => {
     createTaskRequest
   );
 
-  const [newTrack, setNewTrack] = React.useState<ITrackkRequest2>({
+  const [newTrack, setNewTrack] = React.useState<ITrackkRequest>({
     name: "",
     location: "",
     distance: 0,
     estimatedDuration: 0,
-    isCompleted: false,
     dateTime: new Date().toISOString(),
   });
 
@@ -124,20 +123,6 @@ const AddNewTrackScreen = () => {
               })
             }
             keyboardType="numeric"
-            style={{ borderBottomWidth: 1, paddingVertical: 8 }}
-          />
-        </Box>
-        <Box my="2">
-          <Text variant="textXl">Completed</Text>
-          <TextInput
-            placeholder="isCompleted"
-            value={newTrack.isCompleted ? "Completed" : "Not Completed"}
-            onChangeText={(text) =>
-              setNewTrack({
-                ...newTrack,
-                isCompleted: text.toLowerCase() === "completed",
-              })
-            }
             style={{ borderBottomWidth: 1, paddingVertical: 8 }}
           />
         </Box>

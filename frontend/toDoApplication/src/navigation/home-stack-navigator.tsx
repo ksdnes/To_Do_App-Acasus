@@ -1,4 +1,4 @@
-import EditTrackScreen from "@/screens/edit-task-screen";
+import EditTrackScreen from "@/screens/edit-track-screen";
 import HomeScreen from "@/screens/home-screen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
