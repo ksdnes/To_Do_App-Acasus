@@ -4,28 +4,19 @@ import Track from "@/components/tracks/track";
 import { fetcher } from "@/services/config";
 import useUserGlobalStore from "@/store/useUserGlobalStore";
 import { ITrack } from "@/types";
-import { getGreeting } from "@/utils/helpers";
 import { Box, Text } from "@/utils/theme";
 import React from "react";
 import { FlatList } from "react-native";
 import { ZoomInEasyDown } from "react-native-reanimated";
 import useSWR from "swr";
 import { useNavigation } from "@react-navigation/native";
-import { Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 const CompletedScreen = () => {
   const navigation = useNavigation<AuthScreenNavigationType<"Me">>();
-  const [triggerLogout, setTriggerLogout] = React.useState(false);
 
   const { user, updateUser } = useUserGlobalStore();
-  const handleLogout = async () => {
-    try {
-      updateUser(null);
-    } catch (error) {
-      console.error("Logout failed", error);
-    }
-  };
+
   const {
     data: tracks,
     isLoading,

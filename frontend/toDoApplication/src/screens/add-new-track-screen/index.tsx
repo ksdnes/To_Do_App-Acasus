@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text } from "@/utils/theme";
-import { TextInput } from "react-native";
+import { TextInput, Platform, View } from "react-native";
 import SafeAreaWrapper from "@/components/shared/safe-area-wrapper";
 import NavigateBack from "@/components/shared/navigate-back";
 import { useNavigation } from "@react-navigation/native";
@@ -8,13 +8,23 @@ import axiosInstance from "@/services/config";
 import { ITrackkRequest2 } from "@/types";
 import Button from "@/components/shared/button";
 import { useTheme } from "@shopify/restyle";
-import useSWR, { useSWRConfig } from "swr";
+import useSWRConfig from "swr";
 import useSWRMutation from "swr/mutation";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const AddNewTrackScreen = () => {
   const theme = useTheme();
   const navigation = useNavigation();
   const { mutate } = useSWRConfig();
+  const [chosenDate, setChosenDate] = React.useState<Date>(new Date());
+  const [showDatePicker, setShowDatePicker] = React.useState<boolean>(false);
+
+  const onDateChange = (event: Event, selectedDate?: Date) => {
+    const currentDate = selectedDate || chosenDate;
+    setShowDatePicker(Platform.OS === "ios");
+    setChosenDate(currentDate);
+    setNewTrack({ ...newTrack, dateTime: currentDate.toISOString() });
+  };
 
   const createTaskRequest = async (
     url: string,
@@ -35,13 +45,13 @@ const AddNewTrackScreen = () => {
     createTaskRequest
   );
 
-  const [newTrack, setNewTrack] = React.useState<ITrackkRequest>({
+  const [newTrack, setNewTrack] = React.useState<ITrackkRequest2>({
     name: "",
     location: "",
     distance: 0,
     estimatedDuration: 0,
     isCompleted: false,
-    dateTime: "",
+    dateTime: new Date().toISOString(),
   });
 
   const addTrack = async () => {
@@ -64,7 +74,9 @@ const AddNewTrackScreen = () => {
         borderRadius="rounded-5xl"
         position="relative"
       >
-        <NavigateBack />
+        <Box flexDirection="row">
+          <NavigateBack />
+        </Box>
         <Box my="2">
           <Text variant="textXl">Name</Text>
           <TextInput
@@ -119,7 +131,7 @@ const AddNewTrackScreen = () => {
           <Text variant="textXl">Completed</Text>
           <TextInput
             placeholder="isCompleted"
-            value={newTrack.isCompleted}
+            value={newTrack.isCompleted ? "Completed" : "Not Completed"}
             onChangeText={(text) =>
               setNewTrack({
                 ...newTrack,
@@ -131,16 +143,28 @@ const AddNewTrackScreen = () => {
         </Box>
         <Box my="2">
           <Text variant="textXl">Date</Text>
-          <TextInput
-            placeholder="Date Time"
-            value={newTrack.dateTime.toString()}
-            onChangeText={(text) =>
-              setNewTrack({ ...newTrack, dateTime: new Date(text) })
-            }
-            style={{ borderBottomWidth: 1, paddingVertical: 8 }}
-          />
+          <Box my="2" flexDirection="row" justifyContent="space between">
+            <View>
+              <DateTimePicker
+                value={chosenDate}
+                mode="date"
+                display="default"
+                onChange={onDateChange}
+              />
+            </View>
+            <TextInput
+              placeholder="Date Time"
+              value={new Date(newTrack.dateTime).toLocaleString()}
+              editable={false}
+              style={{
+                borderBottomWidth: 1,
+                paddingVertical: 8,
+                marginLeft: 10,
+              }}
+            />
+          </Box>
         </Box>
-        <Box flexDirection="row" justifyContent="space-between">
+        <Box mt="10">
           <Button
             onPress={addTrack}
             title="Add Track"
