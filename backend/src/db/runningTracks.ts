@@ -40,6 +40,5 @@ export const updateRunningTrackById = (
 };
 export const deleteRunningTrackById = (id: string) => {
   const deletedTask = RunningTracksModel.findByIdAndDelete(id);
-  console.log("deletedTask", deletedTask);
   return deletedTask;
 };

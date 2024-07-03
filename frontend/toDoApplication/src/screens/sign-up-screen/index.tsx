@@ -30,12 +30,7 @@ const SignUpScreen = () => {
   const onSubmit = async (data: IUser) => {
     try {
       const { email, username, password } = data;
-      /**
-       * register user
-       */
-      console.log(
-        "email: " + email + " name: " + username + " pass: " + password
-      );
+
       await registerUser({
         email,
         username,

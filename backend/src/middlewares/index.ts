@@ -10,7 +10,6 @@ export const authenticateToken = async (
   next: express.NextFunction
 ) => {
   const authHeader = req.headers["authorization"];
-  console.log("authHeader" + authHeader);
   if (!authHeader) {
     return res.status(401).json({ message: "Authentication failed heree" });
   }
@@ -22,14 +21,12 @@ export const authenticateToken = async (
 
   try {
     const decodedToken = verifyToken(token.toString());
-    console.log("decodedToken1", decodedToken);
 
     if (typeof decodedToken === "string" || !decodedToken) {
       return res.status(401).json({ message: "Token verification failed" });
     }
 
     const { id } = decodedToken;
-    console.log("decodedToken1", decodedToken);
     const existingUser = await getUserById(id);
     if (!existingUser) {
       console.log("No existing user with this token");

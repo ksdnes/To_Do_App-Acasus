@@ -25,8 +25,8 @@ export type RootBottomTabParamList = {
 
 export type HomeStackParamList = {
   Home: undefined;
-  EditTask: {
-    task: ITask;
+  EditTrack: {
+    Track: ITask;
   };
 };
 

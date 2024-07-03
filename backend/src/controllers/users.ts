@@ -34,7 +34,6 @@ export const updateUser = async (
   try {
     const { id } = req.params;
     const { username } = req.body;
-    console.log(req.body);
     if (!username) {
       return res.sendStatus(400);
     }

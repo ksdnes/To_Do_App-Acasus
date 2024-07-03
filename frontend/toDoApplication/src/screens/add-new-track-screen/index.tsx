@@ -20,13 +20,10 @@ const AddNewTrackScreen = () => {
     url: string,
     { arg }: { arg: ITrackkRequest2 }
   ) => {
-    console.log("NEWWWWW", arg);
     try {
-      console.log("hello");
       const response = await axiosInstance.post(url, {
         ...arg,
       });
-      console.log("reponseeee:", response);
     } catch (error) {
       console.error("Error creating track:", error);
       throw error;
@@ -48,7 +45,6 @@ const AddNewTrackScreen = () => {
   });
 
   const addTrack = async () => {
-    console.log("newTrack", newTrack);
     try {
       await triggerCreate(newTrack);
       mutate("/running-tracks");

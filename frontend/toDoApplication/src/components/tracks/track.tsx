@@ -31,7 +31,6 @@ const toggleTaskStatusRequest = async (
   url: string,
   { arg }: { arg: ITrackStatusRequest }
 ) => {
-  console.log(arg._id);
   try {
     await axiosInstance.patch(url + "/" + arg._id, { ...arg });
   } catch (error) {
@@ -73,7 +72,6 @@ const Track = ({ track, user, mutateTracks }: TrackProps) => {
     };
   });
   const toggleTaskStatus = async () => {
-    console.log("clicked");
     try {
       const updatedTask = {
         isCompleted: !track.isCompleted,

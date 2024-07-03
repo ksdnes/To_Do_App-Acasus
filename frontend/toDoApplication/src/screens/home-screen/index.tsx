@@ -21,7 +21,6 @@ const HomeScreen = () => {
     isLoading,
     mutate: mutateTracks,
   } = useSWR<ITrack[]>("running-tracks/", fetcher);
-  console.log("data", data);
   if (isLoading || !data) {
     return <Loader />;
   }
